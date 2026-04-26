@@ -3,1057 +3,966 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M. Hamad | SEO Executive</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<title>M. Hamad — SEO Executive</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&family=Syne:wght@700;800&display=swap');
+
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#03010a;
-  --s1:#0d0720;
-  --acc:#7c3aed;
-  --acc2:#06b6d4;
-  --acc3:#f59e0b;
-  --txt:#f1f0ff;
-  --muted:#6b7280;
-  --card:rgba(255,255,255,0.03);
-  --border:rgba(255,255,255,0.06);
+  --p:#a78bfa;--p2:#22d3ee;--p3:#fbbf24;
+  --bg:#050508;--g1:#0f0f1a;--g2:#0a0a14;
+  --t:#ffffff;--tm:rgba(255,255,255,.5);--ts:rgba(255,255,255,.25);
+  --bd:rgba(255,255,255,.08);
 }
 html{scroll-behavior:smooth}
 body{
-  background:var(--bg);
-  color:var(--txt);
-  font-family:'Space Grotesk',sans-serif;
+  background:var(--bg);color:var(--t);
+  font-family:'Inter',sans-serif;
   overflow-x:hidden;
-  cursor:none;
+}
+::selection{background:rgba(167,139,250,.3)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--p);border-radius:2px}
+
+/* ═══ LOADER ═══ */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:20px;
+  transition:opacity .6s ease;
+}
+#loader.hide{opacity:0;pointer-events:none}
+.load-ring{
+  width:60px;height:60px;border-radius:50%;
+  border:1px solid rgba(167,139,250,.2);
+  border-top-color:var(--p);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-txt{
+  font-family:'Syne',sans-serif;font-size:11px;
+  letter-spacing:4px;color:var(--tm);
 }
 
-/* CUSTOM CURSOR */
-#cursor{
-  position:fixed;width:12px;height:12px;
-  background:var(--acc2);border-radius:50%;
-  pointer-events:none;z-index:9999;
+/* ═══ CURSOR ═══ */
+#c{
+  position:fixed;width:8px;height:8px;
+  background:var(--p2);border-radius:50%;
+  pointer-events:none;z-index:9000;
   transform:translate(-50%,-50%);
-  transition:width .2s,height .2s,background .2s;
   mix-blend-mode:screen;
+  transition:width .15s,height .15s;
 }
-#cursor-ring{
-  position:fixed;width:40px;height:40px;
-  border:1px solid rgba(6,182,212,0.4);
-  border-radius:50%;pointer-events:none;
-  z-index:9998;transform:translate(-50%,-50%);
-  transition:all .12s ease;
-}
-
-/* CANVAS */
-#bg-canvas{
-  position:fixed;inset:0;z-index:0;
-  opacity:0.6;
+#cr{
+  position:fixed;width:36px;height:36px;
+  border:1px solid rgba(167,139,250,.35);
+  border-radius:50%;pointer-events:none;z-index:8999;
+  transform:translate(-50%,-50%);
 }
 
-/* NAV */
+/* ═══ NAV ═══ */
 nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:0 48px;height:64px;
   display:flex;align-items:center;justify-content:space-between;
-  padding:20px 60px;
-  background:rgba(3,1,10,0.7);
-  backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--border);
+  background:rgba(5,5,8,.8);
+  backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--bd);
 }
 .logo{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:28px;letter-spacing:3px;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  font-family:'Syne',sans-serif;font-size:17px;
+  font-weight:800;letter-spacing:-.3px;
+  display:flex;align-items:center;gap:10px;
 }
-.nav-links{display:flex;gap:32px;list-style:none}
-.nav-links a{
-  color:var(--muted);text-decoration:none;
-  font-size:13px;font-weight:500;letter-spacing:.5px;
-  transition:color .2s;position:relative;
-}
-.nav-links a::after{
-  content:'';position:absolute;bottom:-4px;left:0;right:0;
-  height:1px;background:var(--acc2);
-  transform:scaleX(0);transition:transform .2s;
-}
-.nav-links a:hover{color:var(--txt)}
-.nav-links a:hover::after{transform:scaleX(1)}
-.nav-hire{
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  color:white;padding:10px 24px;border-radius:100px;
-  text-decoration:none;font-size:13px;font-weight:600;
-  transition:transform .2s,box-shadow .2s;
-  box-shadow:0 0 20px rgba(124,58,237,.3);
-}
-.nav-hire:hover{transform:scale(1.05);box-shadow:0 0 40px rgba(124,58,237,.5)}
-
-/* HERO */
-#hero{
-  min-height:100vh;display:flex;align-items:center;
-  padding:120px 60px 80px;position:relative;z-index:1;
-}
-.hero-left{flex:1;max-width:700px}
-.hero-right{
-  flex:0 0 380px;height:380px;
-  position:relative;perspective:800px;
-}
-
-/* 3D ROTATING CUBE */
-.cube-scene{
-  width:200px;height:200px;
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  perspective:600px;
-}
-.cube{
-  width:200px;height:200px;
-  transform-style:preserve-3d;
-  animation:rotateCube 12s linear infinite;
-  position:relative;
-}
-@keyframes rotateCube{
-  from{transform:rotateX(20deg) rotateY(0deg)}
-  to{transform:rotateX(20deg) rotateY(360deg)}
-}
-.face{
-  position:absolute;width:200px;height:200px;
-  border:1px solid rgba(124,58,237,0.5);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:22px;letter-spacing:2px;
-  background:rgba(124,58,237,0.04);
-  backdrop-filter:blur(2px);
-}
-.face-front {transform:translateZ(100px);border-color:rgba(124,58,237,.6);color:var(--acc)}
-.face-back  {transform:rotateY(180deg) translateZ(100px);color:var(--acc2);border-color:rgba(6,182,212,.6)}
-.face-right {transform:rotateY(90deg)  translateZ(100px);color:var(--acc3);border-color:rgba(245,158,11,.4)}
-.face-left  {transform:rotateY(-90deg) translateZ(100px);color:var(--acc);border-color:rgba(124,58,237,.4)}
-.face-top   {transform:rotateX(90deg)  translateZ(100px);color:var(--acc2);border-color:rgba(6,182,212,.4)}
-.face-bottom{transform:rotateX(-90deg) translateZ(100px);color:var(--acc3);border-color:rgba(245,158,11,.4)}
-
-/* Orbiting rings */
-.orbit{
-  position:absolute;top:50%;left:50%;
-  border:1px solid rgba(124,58,237,0.2);
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  animation:orbitSpin linear infinite;
-}
-.orbit1{width:300px;height:300px;animation-duration:8s;border-color:rgba(124,58,237,.25)}
-.orbit2{width:360px;height:360px;animation-duration:12s;animation-direction:reverse;border-color:rgba(6,182,212,.15)}
-.orbit3{width:420px;height:420px;animation-duration:20s;border-color:rgba(245,158,11,.1)}
-@keyframes orbitSpin{from{transform:translate(-50%,-50%) rotateZ(0) rotateX(70deg)}to{transform:translate(-50%,-50%) rotateZ(360deg) rotateX(70deg)}}
-
-.orbit-dot{
-  position:absolute;top:0;left:50%;
+.logo-dot{
   width:8px;height:8px;border-radius:50%;
-  transform:translate(-50%,-50%);
+  background:var(--p);
+  box-shadow:0 0 12px var(--p);
+  animation:dotPulse 2s ease infinite;
 }
-.orbit1 .orbit-dot{background:var(--acc);box-shadow:0 0 10px var(--acc)}
-.orbit2 .orbit-dot{background:var(--acc2);box-shadow:0 0 10px var(--acc2)}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 8px var(--p)}50%{box-shadow:0 0 20px var(--p),0 0 40px rgba(167,139,250,.3)}}
+.nav-r{display:flex;align-items:center;gap:32px}
+.nav-r a{
+  font-size:12px;color:var(--tm);text-decoration:none;
+  font-weight:400;letter-spacing:.3px;
+  transition:color .2s;
+}
+.nav-r a:hover{color:var(--t)}
+.nav-cta{
+  font-size:12px!important;color:var(--t)!important;
+  background:rgba(167,139,250,.12);
+  border:1px solid rgba(167,139,250,.25);
+  padding:8px 20px;border-radius:100px;
+  transition:background .2s,border-color .2s!important;
+}
+.nav-cta:hover{background:rgba(167,139,250,.2)!important;border-color:var(--p)!important}
 
-/* HERO TEXT */
-.eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  background:rgba(124,58,237,.12);
-  border:1px solid rgba(124,58,237,.3);
-  border-radius:100px;padding:6px 18px;
-  font-size:12px;font-weight:600;
-  color:var(--acc2);letter-spacing:1.5px;
-  text-transform:uppercase;margin-bottom:28px;
-  animation:fadeSlide .8s ease both;
+/* ═══ HERO ═══ */
+#hero{
+  min-height:100vh;display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:80px 48px 48px;
+  position:relative;overflow:hidden;
 }
-.eyebrow::before{
-  content:'';width:6px;height:6px;border-radius:50%;
-  background:var(--acc3);
-  animation:blink 1.5s infinite;
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 
-h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(60px,8vw,110px);
-  line-height:.95;letter-spacing:-1px;
+/* 3D Globe */
+.globe-wrap{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+#globe-canvas{
+  width:420px;height:420px;
+  border-radius:50%;
+}
+.globe-ring{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(167,139,250,.15);
+  animation:ringRotate linear infinite;
+}
+.gr1{width:480px;height:480px;animation-duration:14s;transform:rotateX(75deg)}
+.gr2{width:540px;height:540px;animation-duration:22s;animation-direction:reverse;transform:rotateX(65deg) rotateZ(30deg);border-color:rgba(34,211,238,.1)}
+.gr3{width:600px;height:600px;animation-duration:35s;transform:rotateX(80deg) rotateZ(60deg);border-color:rgba(251,191,36,.07)}
+@keyframes ringRotate{from{transform:rotateX(75deg) rotateZ(0)}to{transform:rotateX(75deg) rotateZ(360deg)}}
+.globe-label{
+  position:absolute;
+  font-size:10px;font-weight:500;letter-spacing:1.5px;
+  padding:4px 12px;border-radius:100px;
+  border:1px solid;animation:floatLabel 4s ease infinite;
+}
+.gl1{top:15%;right:5%;background:rgba(167,139,250,.08);border-color:rgba(167,139,250,.3);color:var(--p);animation-delay:0s}
+.gl2{bottom:20%;left:0;background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.3);color:var(--p2);animation-delay:1.2s}
+.gl3{top:60%;right:2%;background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.3);color:var(--p3);animation-delay:2.4s}
+@keyframes floatLabel{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* Hero text */
+.hero-txt{position:relative;z-index:2}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:500;letter-spacing:2px;
+  text-transform:uppercase;color:var(--p2);
   margin-bottom:24px;
+  opacity:0;animation:up .7s ease forwards;
 }
-h1 .w1{
-  display:block;
-  background:linear-gradient(135deg,#fff 30%,rgba(255,255,255,.5));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:fadeSlide .8s .1s ease both;
-}
-h1 .w2{
-  display:block;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:fadeSlide .8s .2s ease both;
-}
-h1 .w3{
-  display:block;font-size:clamp(30px,4vw,52px);
-  color:rgba(255,255,255,.35);font-family:'Space Grotesk',sans-serif;
-  font-weight:300;letter-spacing:8px;text-transform:uppercase;
-  -webkit-text-fill-color:rgba(255,255,255,.35);
-  animation:fadeSlide .8s .3s ease both;
+.hero-eyebrow span{
+  width:20px;height:1px;background:var(--p2);display:block;
 }
 
-.hero-desc{
-  font-size:17px;color:var(--muted);font-weight:300;
-  max-width:480px;line-height:1.8;margin-bottom:40px;
-  animation:fadeSlide .8s .4s ease both;
+h1.big{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(52px,6vw,82px);
+  font-weight:800;line-height:1;
+  letter-spacing:-3px;
+  margin-bottom:28px;
+}
+.big .l1{
+  display:block;
+  opacity:0;animation:up .7s .1s ease forwards;
+}
+.big .l2{
+  display:block;color:transparent;
+  -webkit-text-stroke:1px rgba(255,255,255,.25);
+  opacity:0;animation:up .7s .18s ease forwards;
+}
+.big .l3{
+  display:block;
+  background:linear-gradient(90deg,var(--p),var(--p2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  opacity:0;animation:up .7s .26s ease forwards;
 }
 
-.hero-btns{
-  display:flex;gap:14px;margin-bottom:60px;
-  animation:fadeSlide .8s .5s ease both;
+@keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+
+.hero-p{
+  font-size:15px;line-height:1.9;color:var(--tm);
+  font-weight:300;max-width:420px;margin-bottom:36px;
+  opacity:0;animation:up .7s .36s ease forwards;
 }
-.btn-glow{
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  color:white;padding:14px 32px;border-radius:100px;
-  text-decoration:none;font-weight:600;font-size:15px;
-  box-shadow:0 0 40px rgba(124,58,237,.4);
+.hero-acts{
+  display:flex;gap:12px;
+  opacity:0;animation:up .7s .44s ease forwards;
+}
+.btn-a{
+  padding:12px 28px;border-radius:100px;
+  font-size:13px;font-weight:500;text-decoration:none;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  color:#fff;letter-spacing:.3px;
   transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 30px rgba(167,139,250,.35);
 }
-.btn-glow:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 0 60px rgba(124,58,237,.6)}
-.btn-ghost{
-  background:transparent;color:var(--txt);
-  padding:14px 32px;border-radius:100px;
-  text-decoration:none;font-weight:500;font-size:15px;
-  border:1px solid var(--border);
-  transition:border-color .2s,background .2s;
+.btn-a:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(167,139,250,.5)}
+.btn-b{
+  padding:12px 28px;border-radius:100px;
+  font-size:13px;font-weight:400;text-decoration:none;
+  color:var(--tm);border:1px solid var(--bd);letter-spacing:.3px;
+  transition:border-color .2s,color .2s;
 }
-.btn-ghost:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
+.btn-b:hover{border-color:rgba(255,255,255,.2);color:var(--t)}
 
-/* STATS STRIP */
-.stats-strip{
-  display:flex;gap:48px;
-  padding-top:40px;border-top:1px solid var(--border);
-  animation:fadeSlide .8s .6s ease both;
+/* HERO STATS */
+.hero-stats{
+  display:flex;gap:36px;margin-top:52px;padding-top:36px;
+  border-top:1px solid var(--bd);
+  opacity:0;animation:up .7s .52s ease forwards;
 }
-.stat-n{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:42px;letter-spacing:1px;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
+.hs-n{
+  font-family:'Syne',sans-serif;font-size:36px;font-weight:800;
+  background:linear-gradient(135deg,var(--t),var(--tm));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.stat-l{font-size:12px;color:var(--muted);letter-spacing:.5px;margin-top:2px}
-
-@keyframes fadeSlide{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-/* SCROLL INDICATOR */
-.scroll-ind{
-  position:absolute;bottom:40px;left:60px;
-  display:flex;align-items:center;gap:12px;
-  font-size:11px;color:var(--muted);letter-spacing:2px;
-  text-transform:uppercase;
-  animation:fadeSlide 1s .8s ease both;
-}
-.scroll-line{
-  width:40px;height:1px;background:var(--muted);
-  position:relative;overflow:hidden;
-}
-.scroll-line::after{
-  content:'';position:absolute;inset:0;
-  background:var(--acc2);
-  animation:scrollSlide 1.5s ease infinite;
-}
-@keyframes scrollSlide{
-  from{transform:translateX(-100%)}
-  to{transform:translateX(100%)}
-}
-
-/* MARQUEE */
-.marquee-wrap{
-  position:relative;z-index:1;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  background:rgba(124,58,237,.04);
-  overflow:hidden;padding:18px 0;
-}
-.marquee-track{
-  display:flex;gap:0;white-space:nowrap;
-  animation:marquee 20s linear infinite;
-}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.marquee-item{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:20px;letter-spacing:3px;
-  color:rgba(255,255,255,.15);padding:0 40px;
-  transition:color .3s;
-}
-.marquee-item.hi{color:var(--acc)}
-
-/* SECTIONS */
-section{padding:120px 60px;position:relative;z-index:1}
-
-.sec-tag{
-  font-size:11px;font-weight:700;letter-spacing:3px;
-  text-transform:uppercase;color:var(--acc2);
-  margin-bottom:14px;display:flex;align-items:center;gap:10px;
-}
-.sec-tag::before{
-  content:'';width:24px;height:1px;background:var(--acc2);
-}
-h2{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(40px,5vw,72px);
-  letter-spacing:-1px;line-height:1;
-  margin-bottom:16px;
-}
-.sec-sub{
-  color:var(--muted);font-size:16px;font-weight:300;
-  max-width:480px;line-height:1.8;margin-bottom:70px;
-}
-
-/* SERVICES — 3D HOVER CARDS */
-#services{background:var(--s1)}
-.srv-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  border-radius:20px;overflow:hidden;
-}
-.srv-card{
-  background:var(--bg);padding:40px 32px;
-  transition:background .3s;
-  position:relative;overflow:hidden;
-  transform-style:preserve-3d;
-  cursor:none;
-}
-.srv-card::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(124,58,237,.12),transparent 60%);
-  opacity:0;transition:opacity .3s;
-}
-.srv-card:hover::before{opacity:1}
-.srv-card:hover{background:rgba(124,58,237,.05)}
-.srv-num{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:56px;color:rgba(255,255,255,.04);
-  position:absolute;top:20px;right:24px;
   line-height:1;
 }
-.srv-ico{
-  width:48px;height:48px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;margin-bottom:24px;
-  border:1px solid var(--border);
-}
-.srv-card h3{font-size:20px;font-weight:700;margin-bottom:12px;letter-spacing:-.3px}
-.srv-card p{color:var(--muted);font-size:14px;line-height:1.7}
-.srv-arrow{
-  display:inline-block;margin-top:20px;
-  color:var(--acc);font-size:18px;
-  transition:transform .2s;
-}
-.srv-card:hover .srv-arrow{transform:translate(4px,-4px)}
-
-/* WORK — CASE STUDIES */
-#work{background:var(--bg)}
-.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
-.work-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;overflow:hidden;
-  transition:transform .4s,border-color .3s;
-  position:relative;
-}
-.work-card:hover{transform:translateY(-8px);border-color:rgba(124,58,237,.3)}
-.work-img{
-  height:200px;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-  font-family:'Bebas Neue',sans-serif;
-  font-size:80px;letter-spacing:-2px;
-  color:rgba(255,255,255,.05);
-}
-.work-card:nth-child(1) .work-img{background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(6,182,212,.08))}
-.work-card:nth-child(2) .work-img{background:linear-gradient(135deg,rgba(6,182,212,.15),rgba(245,158,11,.08))}
-.work-card:nth-child(3) .work-img{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(124,58,237,.08))}
-.work-card:nth-child(3){grid-column:1/-1}
-.work-card:nth-child(3) .work-img{height:140px}
-
-.work-glow{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-}
-.work-glow-circle{
-  width:120px;height:120px;border-radius:50%;
-  background:radial-gradient(circle,rgba(124,58,237,.3),transparent 70%);
-  animation:glowPulse 3s ease infinite;
-}
-@keyframes glowPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.3);opacity:1}}
-
-.work-body{padding:28px}
-.work-niche{
-  font-size:11px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:var(--acc2);margin-bottom:10px;
-}
-.work-card h3{font-size:22px;font-weight:700;letter-spacing:-.5px;margin-bottom:10px}
-.work-card p{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:20px}
-.work-metrics{display:flex;gap:28px}
-.wm-val{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--acc);letter-spacing:.5px}
-.wm-lbl{font-size:11px;color:var(--muted);margin-top:2px}
-.work-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
-.wtag{
-  background:rgba(124,58,237,.1);color:var(--acc);
-  font-size:11px;font-weight:600;padding:4px 12px;
-  border-radius:100px;border:1px solid rgba(124,58,237,.2);
-  letter-spacing:.5px;
-}
-
-/* SKILLS — ANIMATED */
-#skills{background:var(--s1)}
-.skills-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.skill-bar-item{margin-bottom:28px}
-.skill-top{display:flex;justify-content:space-between;margin-bottom:10px}
-.skill-name{font-size:14px;font-weight:500}
-.skill-pct{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:20px;letter-spacing:1px;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
+.hs-n span{
+  background:linear-gradient(135deg,var(--p),var(--p2));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
-.skill-track{height:2px;background:rgba(255,255,255,.06);position:relative}
-.skill-fill{
-  height:100%;position:absolute;top:0;left:0;
-  background:linear-gradient(90deg,var(--acc),var(--acc2));
-  width:0;transition:width 1.4s cubic-bezier(.4,0,.2,1);
+.hs-l{font-size:11px;color:var(--ts);letter-spacing:.5px;margin-top:6px}
+
+/* ═══ TICKER ═══ */
+.ticker-wrap{
+  border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);
+  overflow:hidden;padding:14px 0;
+  background:linear-gradient(90deg,rgba(167,139,250,.04),rgba(34,211,238,.04));
 }
-.skill-fill::after{
-  content:'';position:absolute;right:0;top:50%;
-  width:8px;height:8px;border-radius:50%;
-  background:var(--acc2);
-  transform:translate(50%,-50%);
-  box-shadow:0 0 10px var(--acc2);
+.ticker-track{
+  display:flex;gap:0;white-space:nowrap;
+  animation:tick 25s linear infinite;
+}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ti{
+  font-size:11px;font-weight:500;letter-spacing:2.5px;
+  color:rgba(255,255,255,.18);padding:0 28px;
+}
+.ti.lit{color:var(--p)}
+
+/* ═══ SECTIONS ═══ */
+section{padding:120px 48px;position:relative}
+
+.stag{
+  font-size:10px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--p);
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.stag::before{content:'';width:32px;height:1px;background:var(--p);display:block}
+
+h2.sh{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(36px,4.5vw,58px);
+  font-weight:800;letter-spacing:-2px;
+  line-height:1.05;margin-bottom:14px;
+}
+.sp{
+  font-size:15px;color:var(--tm);font-weight:300;
+  max-width:460px;line-height:1.8;margin-bottom:72px;
 }
 
-.tools-wrap h3{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:36px;letter-spacing:-1px;margin-bottom:28px;
+/* ═══ SERVICES ═══ */
+#srv{background:var(--g1)}
+.srv-g{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--bd);
+  border-radius:20px;overflow:hidden;
+  border:1px solid var(--bd);
 }
-.tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.tool-item{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:14px 16px;
-  display:flex;align-items:center;gap:12px;
-  font-size:13px;font-weight:500;
-  transition:border-color .2s,background .2s,transform .2s;
-  cursor:none;
-}
-.tool-item:hover{border-color:rgba(124,58,237,.3);background:rgba(124,58,237,.05);transform:scale(1.02)}
-.tool-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  flex-shrink:0;
-}
-
-/* CERTS */
-#certs{background:var(--bg)}
-.cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.cert-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:28px;
-  display:flex;align-items:center;gap:20px;
-  transition:transform .3s,border-color .3s;
+.sc{
+  background:var(--bg);padding:36px 28px;
   position:relative;overflow:hidden;
+  transition:background .3s;
+  group:true;
 }
-.cert-card::after{
-  content:'';position:absolute;
-  top:-50%;left:-50%;width:200%;height:200%;
-  background:conic-gradient(from 0deg,transparent,rgba(124,58,237,.06),transparent);
-  animation:certSpin 6s linear infinite;
+.sc::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(500px circle at var(--x,50%) var(--y,50%),rgba(167,139,250,.06),transparent 60%);
   opacity:0;transition:opacity .3s;
 }
-.cert-card:hover::after{opacity:1}
-.cert-card:hover{transform:scale(1.02);border-color:rgba(124,58,237,.25)}
-@keyframes certSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.cert-ico{
-  width:52px;height:52px;border-radius:14px;
-  background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(6,182,212,.2));
-  border:1px solid rgba(124,58,237,.3);
+.sc:hover::after{opacity:1}
+.sc:hover{background:rgba(167,139,250,.03)}
+.sc-n{
+  font-family:'Syne',sans-serif;
+  font-size:64px;font-weight:800;
+  color:rgba(255,255,255,.03);
+  position:absolute;top:16px;right:20px;line-height:1;
+}
+.sc-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.15);
   display:flex;align-items:center;justify-content:center;
-  font-size:22px;flex-shrink:0;position:relative;z-index:1;
+  font-size:18px;margin-bottom:20px;
 }
-.cert-name{font-size:15px;font-weight:600;margin-bottom:4px;position:relative;z-index:1}
-.cert-by{font-size:12px;color:var(--acc2);font-weight:500;position:relative;z-index:1}
+.sc h3{font-size:16px;font-weight:600;margin-bottom:10px;letter-spacing:-.3px}
+.sc p{font-size:13px;color:var(--tm);line-height:1.7}
+.sc-arr{
+  display:inline-block;margin-top:18px;
+  font-size:16px;color:rgba(167,139,250,.4);
+  transition:color .2s,transform .2s;
+}
+.sc:hover .sc-arr{color:var(--p);transform:translate(3px,-3px)}
 
-/* EXPERIENCE */
-#exp{background:var(--s1)}
-.exp-timeline{position:relative;padding-left:32px}
-.exp-timeline::before{
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:1px;
-  background:linear-gradient(to bottom,var(--acc),var(--acc2),transparent);
+/* ═══ WORK ═══ */
+#wrk{background:var(--bg)}
+.wg{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.wc{
+  border:1px solid var(--bd);border-radius:20px;
+  overflow:hidden;background:var(--g2);
+  transition:transform .4s cubic-bezier(.4,0,.2,1),border-color .3s;
+  position:relative;
 }
-.exp-item{
-  position:relative;margin-bottom:56px;
-  opacity:0;transform:translateX(-20px);
-  transition:all .6s ease;
+.wc:hover{transform:translateY(-6px);border-color:rgba(167,139,250,.2)}
+.wc:last-child{grid-column:1/-1}
+.wc-vis{
+  height:180px;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
 }
-.exp-item.show{opacity:1;transform:translateX(0)}
-.exp-item::before{
-  content:'';position:absolute;left:-36px;top:6px;
-  width:10px;height:10px;border-radius:50%;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  box-shadow:0 0 15px rgba(124,58,237,.6);
+.wc:nth-child(1) .wc-vis{background:linear-gradient(135deg,rgba(167,139,250,.08) 0%,rgba(34,211,238,.04) 100%)}
+.wc:nth-child(2) .wc-vis{background:linear-gradient(135deg,rgba(34,211,238,.08) 0%,rgba(251,191,36,.04) 100%)}
+.wc:nth-child(3) .wc-vis{background:linear-gradient(135deg,rgba(251,191,36,.06) 0%,rgba(167,139,250,.04) 100%)}
+.wc:last-child .wc-vis{height:120px}
+.vis-3d{
+  perspective:400px;
+  transform-style:preserve-3d;
 }
-.exp-date{
-  font-size:11px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:var(--acc);margin-bottom:8px;
+.vis-box{
+  width:80px;height:80px;
+  transform-style:preserve-3d;
+  animation:visRotate 8s linear infinite;
+  position:relative;
 }
-.exp-item h3{font-size:24px;font-weight:700;letter-spacing:-.5px;margin-bottom:4px}
-.exp-co{font-size:14px;color:var(--acc2);margin-bottom:16px}
-.exp-list{list-style:none}
-.exp-list li{
-  font-size:14px;color:var(--muted);
-  padding:5px 0 5px 20px;position:relative;line-height:1.6;
+@keyframes visRotate{from{transform:rotateX(20deg) rotateY(0)}to{transform:rotateX(20deg) rotateY(360deg)}}
+.vf{
+  position:absolute;inset:0;
+  border:1px solid rgba(167,139,250,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:600;letter-spacing:1px;
+  color:var(--p);
+  background:rgba(167,139,250,.04);
+  backdrop-filter:blur(4px);
 }
-.exp-list li::before{
-  content:'›';position:absolute;left:0;
-  color:var(--acc2);font-size:16px;top:4px;
+.vf.front{transform:translateZ(40px)}
+.vf.back{transform:rotateY(180deg) translateZ(40px);color:var(--p2);border-color:rgba(34,211,238,.3)}
+.vf.right{transform:rotateY(90deg) translateZ(40px);color:var(--p3);border-color:rgba(251,191,36,.3)}
+.vf.left{transform:rotateY(-90deg) translateZ(40px);color:var(--p)}
+.vf.top{transform:rotateX(90deg) translateZ(40px);color:var(--p2)}
+.vf.bottom{transform:rotateX(-90deg) translateZ(40px)}
+
+.wc-b{padding:24px}
+.wc-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--p2);margin-bottom:10px}
+.wc h3{font-size:18px;font-weight:600;letter-spacing:-.4px;margin-bottom:8px}
+.wc p{font-size:13px;color:var(--tm);line-height:1.7;margin-bottom:18px}
+.wc-ms{display:flex;gap:24px}
+.wm-v{
+  font-family:'Syne',sans-serif;font-size:24px;font-weight:800;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.wm-l{font-size:10px;color:var(--ts);margin-top:4px;letter-spacing:.5px}
+.wc-pills{
+  display:flex;gap:6px;flex-wrap:wrap;
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--bd);
+}
+.pill{
+  background:rgba(167,139,250,.07);
+  border:1px solid rgba(167,139,250,.15);
+  color:rgba(167,139,250,.8);
+  font-size:10px;font-weight:600;
+  padding:3px 10px;border-radius:100px;letter-spacing:.5px;
 }
 
-/* CONTACT */
-#contact{
-  background:var(--bg);text-align:center;
-  padding:140px 60px;position:relative;overflow:hidden;
+/* ═══ SKILLS ═══ */
+#skl{background:var(--g1)}
+.skl-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+
+.sb-item{margin-bottom:24px}
+.sb-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.sb-name{font-size:13px;font-weight:400;color:var(--tm)}
+.sb-pct{
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:800;
+  color:transparent;-webkit-text-stroke:1px rgba(167,139,250,.5);
 }
-.contact-glow{
+.sb-track{height:1px;background:rgba(255,255,255,.06);position:relative}
+.sb-fill{
+  height:100%;position:absolute;top:0;left:0;
+  background:linear-gradient(90deg,var(--p),var(--p2));
+  width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 8px rgba(167,139,250,.6);
+}
+
+.tools-sec h3{
+  font-family:'Syne',sans-serif;font-size:28px;
+  font-weight:800;letter-spacing:-1px;margin-bottom:24px;
+}
+.tool-g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tool-c{
+  border:1px solid var(--bd);border-radius:10px;
+  padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:400;color:var(--tm);
+  transition:border-color .2s,color .2s,background .2s;
+  cursor:default;
+}
+.tool-c:hover{border-color:rgba(167,139,250,.25);color:var(--t);background:rgba(167,139,250,.04)}
+.tool-c i{
+  width:6px;height:6px;border-radius:50%;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  flex-shrink:0;opacity:.6;
+}
+
+/* ═══ CERTS ═══ */
+#crt{background:var(--bg)}
+.cert-g{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.cert-c{
+  border:1px solid var(--bd);border-radius:16px;
+  padding:24px;display:flex;align-items:center;gap:16px;
+  background:var(--g2);
+  transition:border-color .3s,transform .3s;position:relative;overflow:hidden;
+}
+.cert-c::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(167,139,250,.04),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.cert-c:hover{border-color:rgba(167,139,250,.2);transform:scale(1.015)}
+.cert-c:hover::before{opacity:1}
+.cert-ico{
+  width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;position:relative;z-index:1;
+}
+.cert-n{font-size:14px;font-weight:500;margin-bottom:3px;position:relative;z-index:1}
+.cert-by{font-size:11px;color:var(--p2);font-weight:500;letter-spacing:.3px;position:relative;z-index:1}
+
+/* ═══ EXP ═══ */
+#xp{background:var(--g1)}
+.tl{position:relative;padding-left:28px}
+.tl::before{
+  content:'';position:absolute;left:0;top:6px;bottom:0;
+  width:1px;background:linear-gradient(to bottom,var(--p),rgba(167,139,250,.1));
+}
+.tl-item{
+  margin-bottom:52px;position:relative;
+  opacity:0;transform:translateX(-16px);
+  transition:opacity .6s,transform .6s;
+}
+.tl-item.on{opacity:1;transform:none}
+.tl-item::before{
+  content:'';position:absolute;left:-32px;top:5px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--p);
+  box-shadow:0 0 0 3px rgba(167,139,250,.15),0 0 12px rgba(167,139,250,.5);
+}
+.tl-date{
+  font-size:10px;font-weight:600;letter-spacing:2px;
+  color:var(--p);text-transform:uppercase;margin-bottom:8px;
+}
+.tl-item h3{font-size:20px;font-weight:600;letter-spacing:-.4px;margin-bottom:4px}
+.tl-co{font-size:12px;color:var(--p2);margin-bottom:14px;letter-spacing:.3px}
+.tl-list{list-style:none}
+.tl-list li{
+  font-size:13px;color:var(--tm);
+  padding:4px 0 4px 16px;position:relative;line-height:1.6;
+}
+.tl-list li::before{
+  content:'';position:absolute;left:0;top:11px;
+  width:4px;height:1px;background:var(--p2);
+}
+
+/* ═══ CONTACT ═══ */
+#ct{
+  background:var(--bg);min-height:80vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:120px 48px;
+  position:relative;overflow:hidden;
+}
+.ct-glow{
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
-  width:600px;height:600px;
-  background:radial-gradient(circle,rgba(124,58,237,.12),transparent 70%);
+  width:700px;height:400px;
+  background:radial-gradient(ellipse,rgba(167,139,250,.08) 0%,transparent 65%);
   pointer-events:none;
 }
-.contact-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
-.contact-inner h2{font-size:clamp(48px,7vw,90px);margin-bottom:20px}
-.contact-sub{color:var(--muted);font-size:17px;font-weight:300;line-height:1.8;margin-bottom:48px}
-.contact-links{
-  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;
+.ct-inner{position:relative;z-index:1;max-width:580px}
+.ct-inner h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(48px,7vw,86px);
+  font-weight:800;letter-spacing:-3px;
+  line-height:1;margin-bottom:20px;
 }
-.c-link{
-  display:flex;align-items:center;gap:12px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:100px;padding:14px 24px;
-  text-decoration:none;color:var(--txt);
-  font-size:14px;font-weight:500;
-  transition:border-color .2s,transform .2s,background .2s;
+.ct-inner h2 span{
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.2);
 }
-.c-link:hover{border-color:rgba(124,58,237,.4);transform:translateY(-3px);background:rgba(124,58,237,.06)}
-.c-icon{font-size:18px}
+.ct-sub{
+  font-size:15px;color:var(--tm);font-weight:300;
+  line-height:1.8;margin-bottom:48px;
+}
+.ct-links{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.ct-lnk{
+  display:flex;align-items:center;gap:10px;
+  border:1px solid var(--bd);border-radius:100px;
+  padding:12px 22px;text-decoration:none;
+  color:var(--tm);font-size:13px;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.ct-lnk:hover{border-color:rgba(167,139,250,.3);color:var(--t);background:rgba(167,139,250,.04)}
+.ct-lnk span{font-size:14px}
 
-/* FOOTER */
+/* ═══ FOOTER ═══ */
 footer{
-  padding:28px 60px;border-top:1px solid var(--border);
+  padding:24px 48px;border-top:1px solid var(--bd);
   display:flex;justify-content:space-between;align-items:center;
-  position:relative;z-index:1;
+  font-size:11px;color:var(--ts);letter-spacing:.3px;
 }
-.footer-logo{
-  font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;
-  background:linear-gradient(135deg,var(--acc),var(--acc2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.footer-txt{font-size:12px;color:var(--muted)}
 
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
-.reveal.vis{opacity:1;transform:translateY(0)}
+/* ═══ REVEAL ═══ */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.rv.on{opacity:1;transform:none}
 
 @media(max-width:900px){
-  nav{padding:16px 24px}
-  .nav-links{display:none}
-  section,#hero,#contact{padding:80px 24px}
-  #hero{flex-direction:column;gap:60px}
-  .hero-right{width:100%;height:260px}
-  h1{font-size:56px}
-  .srv-grid{grid-template-columns:1fr}
-  .work-grid{grid-template-columns:1fr}
-  .work-card:nth-child(3){grid-column:auto}
-  .skills-wrap{grid-template-columns:1fr;gap:48px}
-  .cert-grid{grid-template-columns:1fr}
-  footer{flex-direction:column;gap:8px;text-align:center;padding:20px 24px}
-  .stats-strip{gap:28px}
+  nav{padding:0 20px}
+  .nav-r a:not(.nav-cta){display:none}
+  section,#ct{padding:80px 20px}
+  #hero{grid-template-columns:1fr;padding:80px 20px 60px}
+  .globe-wrap{display:none}
+  .srv-g{grid-template-columns:1fr}
+  .wg{grid-template-columns:1fr}
+  .wc:last-child{grid-column:auto}
+  .skl-layout{grid-template-columns:1fr;gap:48px}
+  .cert-g{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:6px;padding:20px;text-align:center}
 }
 </style>
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-<canvas id="bg-canvas"></canvas>
+<div id="loader">
+  <div class="load-ring"></div>
+  <div class="load-txt">LOADING PORTFOLIO</div>
+</div>
+
+<div id="c"></div>
+<div id="cr"></div>
 
 <!-- NAV -->
 <nav>
-  <div class="logo">M.HAMAD</div>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#exp">Experience</a></li>
-    <li><a href="#contact" class="nav-hire">Hire Me →</a></li>
-  </ul>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    M. Hamad
+  </div>
+  <div class="nav-r">
+    <a href="#srv">Services</a>
+    <a href="#wrk">Work</a>
+    <a href="#skl">Skills</a>
+    <a href="#xp">Experience</a>
+    <a href="#ct" class="nav-cta">Hire Me</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-left">
-    <div class="eyebrow">Available for hire · Lahore, Pakistan</div>
-    <h1>
-      <span class="w1">SEO</span>
-      <span class="w2">EXECUTIVE</span>
-      <span class="w3">& GEO SPECIALIST</span>
+  <div class="hero-txt">
+    <div class="hero-eyebrow"><span></span>Available · Lahore, Pakistan</div>
+    <h1 class="big">
+      <span class="l1">SEO</span>
+      <span class="l2">EXECUTIVE</span>
+      <span class="l3">& GEO EXPERT</span>
     </h1>
-    <p class="hero-desc">
-      I build SEO systems that generate compounding organic growth. Technical depth. AI-ready. Data-driven. 2+ years turning search engines into lead machines.
+    <p class="hero-p">
+      I engineer organic growth systems that compound over time. Technical precision. AI-ready. Data-obsessed. Currently at RankTix — open to the right opportunity.
     </p>
-    <div class="hero-btns">
-      <a href="#work" class="btn-glow">View My Work →</a>
-      <a href="#contact" class="btn-ghost">Let's Talk</a>
+    <div class="hero-acts">
+      <a href="#wrk" class="btn-a">View Work →</a>
+      <a href="#ct" class="btn-b">Get in Touch</a>
     </div>
-    <div class="stats-strip">
-      <div><div class="stat-n">2+</div><div class="stat-l">Years in SEO</div></div>
-      <div><div class="stat-n">3+</div><div class="stat-l">Agencies Worked</div></div>
-      <div><div class="stat-n">4</div><div class="stat-l">Certifications</div></div>
-      <div><div class="stat-n">10+</div><div class="stat-l">Skills</div></div>
-    </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="orbit orbit1"><div class="orbit-dot"></div></div>
-    <div class="orbit orbit2"><div class="orbit-dot"></div></div>
-    <div class="orbit orbit3"></div>
-    <div class="cube-scene">
-      <div class="cube">
-        <div class="face face-front">SEO</div>
-        <div class="face face-back">GEO</div>
-        <div class="face face-right">AI</div>
-        <div class="face face-left">SEM</div>
-        <div class="face face-top">GA4</div>
-        <div class="face face-bottom">GSC</div>
-      </div>
+    <div class="hero-stats">
+      <div><div class="hs-n"><span>2+</span></div><div class="hs-l">YEARS EXP</div></div>
+      <div><div class="hs-n"><span>3+</span></div><div class="hs-l">AGENCIES</div></div>
+      <div><div class="hs-n"><span>4</span></div><div class="hs-l">CERTS</div></div>
+      <div><div class="hs-n"><span>10+</span></div><div class="hs-l">SKILLS</div></div>
     </div>
   </div>
 
-  <div class="scroll-ind">
-    <div class="scroll-line"></div>
-    <span>SCROLL</span>
+  <!-- 3D GLOBE -->
+  <div class="globe-wrap">
+    <div class="globe-ring gr1"></div>
+    <div class="globe-ring gr2"></div>
+    <div class="globe-ring gr3"></div>
+    <canvas id="globe-canvas" width="420" height="420"></canvas>
+    <div class="globe-label gl1">TECHNICAL SEO</div>
+    <div class="globe-label gl2">AI SEARCH</div>
+    <div class="globe-label gl3">ANALYTICS</div>
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span class="marquee-item hi">TECHNICAL SEO</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">ON-PAGE SEO</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item hi">AI SEARCH</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">KEYWORD RESEARCH</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item hi">LINK BUILDING</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">GOOGLE ANALYTICS</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item hi">WORDPRESS</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">GEO OPTIMIZATION</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item hi">TECHNICAL SEO</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">ON-PAGE SEO</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item hi">AI SEARCH</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">KEYWORD RESEARCH</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item hi">LINK BUILDING</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">GOOGLE ANALYTICS</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item hi">WORDPRESS</span>
-    <span class="marquee-item">·</span>
-    <span class="marquee-item">GEO OPTIMIZATION</span>
-    <span class="marquee-item">·</span>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ti lit">TECHNICAL SEO</span><span class="ti">·</span>
+    <span class="ti">ON-PAGE SEO</span><span class="ti">·</span>
+    <span class="ti lit">AI SEARCH & GEO</span><span class="ti">·</span>
+    <span class="ti">KEYWORD RESEARCH</span><span class="ti">·</span>
+    <span class="ti lit">LINK BUILDING</span><span class="ti">·</span>
+    <span class="ti">GOOGLE ANALYTICS 4</span><span class="ti">·</span>
+    <span class="ti lit">WORDPRESS</span><span class="ti">·</span>
+    <span class="ti">SITE AUDITS</span><span class="ti">·</span>
+    <span class="ti lit">TECHNICAL SEO</span><span class="ti">·</span>
+    <span class="ti">ON-PAGE SEO</span><span class="ti">·</span>
+    <span class="ti lit">AI SEARCH & GEO</span><span class="ti">·</span>
+    <span class="ti">KEYWORD RESEARCH</span><span class="ti">·</span>
+    <span class="ti lit">LINK BUILDING</span><span class="ti">·</span>
+    <span class="ti">GOOGLE ANALYTICS 4</span><span class="ti">·</span>
+    <span class="ti lit">WORDPRESS</span><span class="ti">·</span>
+    <span class="ti">SITE AUDITS</span><span class="ti">·</span>
   </div>
 </div>
 
 <!-- SERVICES -->
-<section id="services">
-  <p class="sec-tag reveal">What I Do</p>
-  <h2 class="reveal">My Services</h2>
-  <p class="sec-sub reveal">Full-spectrum SEO — from crawl to conversion, from Google to AI search engines.</p>
-  <div class="srv-grid reveal">
-    <div class="srv-card" id="s1">
-      <div class="srv-num">01</div>
-      <div class="srv-ico">🔧</div>
-      <h3>Technical SEO</h3>
-      <p>Site audits, Core Web Vitals, crawl error fixes, indexing, schema markup, and GSC resolution.</p>
-      <div class="srv-arrow">↗</div>
-    </div>
-    <div class="srv-card" id="s2">
-      <div class="srv-num">02</div>
-      <div class="srv-ico">📝</div>
-      <h3>On-Page SEO</h3>
-      <p>Keyword research, content optimization, meta tags, internal linking, search intent alignment.</p>
-      <div class="srv-arrow">↗</div>
-    </div>
-    <div class="srv-card" id="s3">
-      <div class="srv-num">03</div>
-      <div class="srv-ico">🤖</div>
-      <h3>AI SEO & GEO</h3>
-      <p>Make your brand visible in ChatGPT, Gemini, Perplexity — the new search frontier.</p>
-      <div class="srv-arrow">↗</div>
-    </div>
-    <div class="srv-card" id="s4">
-      <div class="srv-num">04</div>
-      <div class="srv-ico">🔗</div>
-      <h3>Link Building</h3>
-      <p>White-hat backlink acquisition, competitor gap analysis, digital PR, guest posting.</p>
-      <div class="srv-arrow">↗</div>
-    </div>
-    <div class="srv-card" id="s5">
-      <div class="srv-num">05</div>
-      <div class="srv-ico">📊</div>
-      <h3>Analytics & Reporting</h3>
-      <p>GA4 setup, GSC monitoring, custom dashboards, monthly performance insights.</p>
-      <div class="srv-arrow">↗</div>
-    </div>
-    <div class="srv-card" id="s6">
-      <div class="srv-num">06</div>
-      <div class="srv-ico">🛒</div>
-      <h3>E-commerce SEO</h3>
-      <p>Product optimization, category structure, conversion-focused content for online stores.</p>
-      <div class="srv-arrow">↗</div>
-    </div>
+<section id="srv">
+  <p class="stag rv">What I Do</p>
+  <h2 class="sh rv">Services</h2>
+  <p class="sp rv">End-to-end SEO from crawl budget to AI-generated answers.</p>
+  <div class="srv-g rv">
+    <div class="sc" id="sc1"><div class="sc-n">01</div><div class="sc-icon">⚙</div><h3>Technical SEO</h3><p>Core Web Vitals, crawl errors, indexing, schema, GSC fixes, site architecture.</p><div class="sc-arr">↗</div></div>
+    <div class="sc" id="sc2"><div class="sc-n">02</div><div class="sc-icon">✦</div><h3>On-Page SEO</h3><p>Keyword mapping, content optimization, meta, internal links, search intent.</p><div class="sc-arr">↗</div></div>
+    <div class="sc" id="sc3"><div class="sc-n">03</div><div class="sc-icon">◈</div><h3>AI SEO & GEO</h3><p>Visibility in ChatGPT, Gemini, Perplexity. The new search frontier.</p><div class="sc-arr">↗</div></div>
+    <div class="sc" id="sc4"><div class="sc-n">04</div><div class="sc-icon">⬡</div><h3>Link Building</h3><p>White-hat backlinks, competitor gap, digital PR, guest posts, niche edits.</p><div class="sc-arr">↗</div></div>
+    <div class="sc" id="sc5"><div class="sc-n">05</div><div class="sc-icon">▣</div><h3>Analytics & Reporting</h3><p>GA4 setup, GSC monitoring, dashboards, monthly insights that matter.</p><div class="sc-arr">↗</div></div>
+    <div class="sc" id="sc6"><div class="sc-n">06</div><div class="sc-icon">◉</div><h3>E-commerce SEO</h3><p>Product pages, category structure, conversion content for online stores.</p><div class="sc-arr">↗</div></div>
   </div>
 </section>
 
 <!-- WORK -->
-<section id="work">
-  <p class="sec-tag reveal">Portfolio</p>
-  <h2 class="reveal">Case Studies</h2>
-  <p class="sec-sub reveal">Real projects. Measurable results. Zero guesswork.</p>
-  <div class="work-grid">
-    <div class="work-card reveal">
-      <div class="work-img">
-        <div class="work-glow"><div class="work-glow-circle"></div></div>
-        EC
+<section id="wrk">
+  <p class="stag rv">Portfolio</p>
+  <h2 class="sh rv">Case Studies</h2>
+  <p class="sp rv">Real results. No fluff.</p>
+  <div class="wg">
+
+    <div class="wc rv">
+      <div class="wc-vis">
+        <div class="vis-3d"><div class="vis-box">
+          <div class="vf front">EC</div><div class="vf back">SEO</div>
+          <div class="vf right">+40</div><div class="vf left">%</div>
+          <div class="vf top">▲</div><div class="vf bottom">↑</div>
+        </div></div>
       </div>
-      <div class="work-body">
-        <div class="work-niche">E-commerce · Technical SEO</div>
+      <div class="wc-b">
+        <div class="wc-tag">E-commerce · Technical SEO</div>
         <h3>Multi-Niche E-commerce Growth</h3>
-        <p>Full SEO overhaul for e-commerce client at E2E Marketer — technical fixes + on-page + content strategy.</p>
-        <div class="work-metrics">
-          <div><div class="wm-val">↑40%</div><div class="wm-lbl">Organic Traffic</div></div>
-          <div><div class="wm-val">30+</div><div class="wm-lbl">Keywords Ranked</div></div>
-          <div><div class="wm-val">3mo</div><div class="wm-lbl">Timeline</div></div>
+        <p>Full SEO overhaul at E2E Marketer — technical fixes, on-page, content strategy. Compounding traffic in 3 months.</p>
+        <div class="wc-ms">
+          <div><div class="wm-v">↑40%</div><div class="wm-l">ORGANIC TRAFFIC</div></div>
+          <div><div class="wm-v">30+</div><div class="wm-l">KEYWORDS RANKED</div></div>
+          <div><div class="wm-v">3mo</div><div class="wm-l">TIMELINE</div></div>
         </div>
-        <div class="work-tags">
-          <span class="wtag">Technical SEO</span>
-          <span class="wtag">On-Page</span>
-          <span class="wtag">Content</span>
+        <div class="wc-pills">
+          <span class="pill">TECHNICAL SEO</span>
+          <span class="pill">ON-PAGE</span>
+          <span class="pill">CONTENT</span>
         </div>
       </div>
     </div>
-    <div class="work-card reveal">
-      <div class="work-img">
-        <div class="work-glow"><div class="work-glow-circle" style="background:radial-gradient(circle,rgba(6,182,212,.3),transparent 70%)"></div></div>
-        LC
+
+    <div class="wc rv">
+      <div class="wc-vis" style="background:linear-gradient(135deg,rgba(34,211,238,.08),rgba(251,191,36,.04))">
+        <div class="vis-3d"><div class="vis-box" style="animation-direction:reverse">
+          <div class="vf front" style="color:var(--p2);border-color:rgba(34,211,238,.3)">LC</div>
+          <div class="vf back" style="color:var(--p3);border-color:rgba(251,191,36,.3)">GBP</div>
+          <div class="vf right" style="color:var(--p2)">TOP</div><div class="vf left" style="color:var(--p2)">3</div>
+          <div class="vf top" style="color:var(--p3)">MAP</div><div class="vf bottom" style="color:var(--p2)">↑</div>
+        </div></div>
       </div>
-      <div class="work-body">
-        <div class="work-niche">Local SEO · Service Business</div>
+      <div class="wc-b">
+        <div class="wc-tag">Local SEO · Service Business</div>
         <h3>Local Pack Domination</h3>
-        <p>Google Business Profile optimization and local SEO strategy — top 3 map pack rankings in 2 months.</p>
-        <div class="work-metrics">
-          <div><div class="wm-val">↑65%</div><div class="wm-lbl">Local Visibility</div></div>
-          <div><div class="wm-val">Top 3</div><div class="wm-lbl">Map Pack</div></div>
-          <div><div class="wm-val">2mo</div><div class="wm-lbl">Timeline</div></div>
+        <p>GBP optimization and local SEO strategy. Top 3 map pack rankings in 8 weeks for a Lahore service business.</p>
+        <div class="wc-ms">
+          <div><div class="wm-v">↑65%</div><div class="wm-l">LOCAL VISIBILITY</div></div>
+          <div><div class="wm-v">Top 3</div><div class="wm-l">MAP PACK</div></div>
+          <div><div class="wm-v">2mo</div><div class="wm-l">TIMELINE</div></div>
         </div>
-        <div class="work-tags">
-          <span class="wtag">Local SEO</span>
-          <span class="wtag">GBP</span>
-          <span class="wtag">GSC</span>
-        </div>
-      </div>
-    </div>
-    <div class="work-card reveal">
-      <div class="work-img">
-        <div class="work-glow"><div class="work-glow-circle" style="background:radial-gradient(circle,rgba(245,158,11,.25),transparent 70%)"></div></div>
-        AB
-      </div>
-      <div class="work-body">
-        <div class="work-niche">Off-Page SEO · Authority</div>
-        <h3>Domain Authority Building Campaign</h3>
-        <p>Built domain authority across multiple niches at Digital Outreach via strategic link acquisition and content PR.</p>
-        <div class="work-metrics">
-          <div><div class="wm-val">+25 DR</div><div class="wm-lbl">Authority Gained</div></div>
-          <div><div class="wm-val">50+</div><div class="wm-lbl">Backlinks Built</div></div>
-          <div><div class="wm-val">4mo</div><div class="wm-lbl">Timeline</div></div>
-        </div>
-        <div class="work-tags">
-          <span class="wtag">Link Building</span>
-          <span class="wtag">Outreach</span>
-          <span class="wtag">Content PR</span>
+        <div class="wc-pills">
+          <span class="pill">LOCAL SEO</span>
+          <span class="pill">GBP</span>
+          <span class="pill">GSC</span>
         </div>
       </div>
     </div>
+
+    <div class="wc rv">
+      <div class="wc-vis">
+        <div class="vis-3d"><div class="vis-box" style="animation-duration:12s">
+          <div class="vf front" style="color:var(--p3);border-color:rgba(251,191,36,.3)">DA</div>
+          <div class="vf back">+25</div>
+          <div class="vf right" style="color:var(--p3)">DR</div><div class="vf left">50+</div>
+          <div class="vf top" style="color:var(--p3)">↑</div><div class="vf bottom">LNK</div>
+        </div></div>
+      </div>
+      <div class="wc-b">
+        <div class="wc-tag">Off-Page SEO · Authority</div>
+        <h3>Domain Authority Campaign — Digital Outreach</h3>
+        <p>Strategic white-hat link building across multiple niches. +25 DR increase, 50+ quality backlinks in 4 months.</p>
+        <div class="wc-ms">
+          <div><div class="wm-v">+25 DR</div><div class="wm-l">AUTHORITY</div></div>
+          <div><div class="wm-v">50+</div><div class="wm-l">BACKLINKS</div></div>
+          <div><div class="wm-v">4mo</div><div class="wm-l">TIMELINE</div></div>
+        </div>
+        <div class="wc-pills">
+          <span class="pill">LINK BUILDING</span>
+          <span class="pill">OUTREACH</span>
+          <span class="pill">CONTENT PR</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills">
-  <p class="sec-tag reveal">Expertise</p>
-  <h2 class="reveal">Skills & Tools</h2>
-  <p class="sec-sub reveal">Built through real work, not just courses.</p>
-  <div class="skills-wrap">
-    <div class="skills-bars reveal" id="skill-bars">
-      <div class="skill-bar-item">
-        <div class="skill-top"><span class="skill-name">Technical SEO</span><span class="skill-pct">95</span></div>
-        <div class="skill-track"><div class="skill-fill" data-w="95"></div></div>
-      </div>
-      <div class="skill-bar-item">
-        <div class="skill-top"><span class="skill-name">On-Page SEO</span><span class="skill-pct">95</span></div>
-        <div class="skill-track"><div class="skill-fill" data-w="95"></div></div>
-      </div>
-      <div class="skill-bar-item">
-        <div class="skill-top"><span class="skill-name">Keyword Research</span><span class="skill-pct">90</span></div>
-        <div class="skill-track"><div class="skill-fill" data-w="90"></div></div>
-      </div>
-      <div class="skill-bar-item">
-        <div class="skill-top"><span class="skill-name">Off-Page & Link Building</span><span class="skill-pct">88</span></div>
-        <div class="skill-track"><div class="skill-fill" data-w="88"></div></div>
-      </div>
-      <div class="skill-bar-item">
-        <div class="skill-top"><span class="skill-name">AI SEO / GEO</span><span class="skill-pct">85</span></div>
-        <div class="skill-track"><div class="skill-fill" data-w="85"></div></div>
-      </div>
-      <div class="skill-bar-item">
-        <div class="skill-top"><span class="skill-name">Google Analytics 4</span><span class="skill-pct">88</span></div>
-        <div class="skill-track"><div class="skill-fill" data-w="88"></div></div>
-      </div>
-      <div class="skill-bar-item">
-        <div class="skill-top"><span class="skill-name">WordPress Design</span><span class="skill-pct">82</span></div>
-        <div class="skill-track"><div class="skill-fill" data-w="82"></div></div>
-      </div>
+<section id="skl">
+  <p class="stag rv">Expertise</p>
+  <h2 class="sh rv">Skills & Tools</h2>
+  <p class="sp rv">Built through real client work.</p>
+  <div class="skl-layout">
+    <div id="sbars" class="rv">
+      <div class="sb-item"><div class="sb-top"><span class="sb-name">Technical SEO</span><span class="sb-pct">95</span></div><div class="sb-track"><div class="sb-fill" data-w="95"></div></div></div>
+      <div class="sb-item"><div class="sb-top"><span class="sb-name">On-Page SEO</span><span class="sb-pct">95</span></div><div class="sb-track"><div class="sb-fill" data-w="95"></div></div></div>
+      <div class="sb-item"><div class="sb-top"><span class="sb-name">Keyword Research</span><span class="sb-pct">90</span></div><div class="sb-track"><div class="sb-fill" data-w="90"></div></div></div>
+      <div class="sb-item"><div class="sb-top"><span class="sb-name">Off-Page & Link Building</span><span class="sb-pct">88</span></div><div class="sb-track"><div class="sb-fill" data-w="88"></div></div></div>
+      <div class="sb-item"><div class="sb-top"><span class="sb-name">AI SEO / GEO</span><span class="sb-pct">85</span></div><div class="sb-track"><div class="sb-fill" data-w="85"></div></div></div>
+      <div class="sb-item"><div class="sb-top"><span class="sb-name">Google Analytics 4</span><span class="sb-pct">88</span></div><div class="sb-track"><div class="sb-fill" data-w="88"></div></div></div>
+      <div class="sb-item"><div class="sb-top"><span class="sb-name">WordPress Design</span><span class="sb-pct">82</span></div><div class="sb-track"><div class="sb-fill" data-w="82"></div></div></div>
     </div>
-    <div class="tools-wrap reveal">
-      <h3>Tools I Use Daily</h3>
-      <div class="tool-grid">
-        <div class="tool-item"><div class="tool-dot"></div>Google Search Console</div>
-        <div class="tool-item"><div class="tool-dot"></div>Google Analytics 4</div>
-        <div class="tool-item"><div class="tool-dot"></div>SEMrush</div>
-        <div class="tool-item"><div class="tool-dot"></div>Ahrefs</div>
-        <div class="tool-item"><div class="tool-dot"></div>Screaming Frog</div>
-        <div class="tool-item"><div class="tool-dot"></div>WordPress</div>
-        <div class="tool-item"><div class="tool-dot"></div>Yoast SEO</div>
-        <div class="tool-item"><div class="tool-dot"></div>PageSpeed Insights</div>
-        <div class="tool-item"><div class="tool-dot"></div>ChatGPT / AI Tools</div>
-        <div class="tool-item"><div class="tool-dot"></div>Moz Pro</div>
+    <div class="tools-sec rv">
+      <h3>Tools</h3>
+      <div class="tool-g">
+        <div class="tool-c"><i></i>Google Search Console</div>
+        <div class="tool-c"><i></i>Google Analytics 4</div>
+        <div class="tool-c"><i></i>SEMrush</div>
+        <div class="tool-c"><i></i>Ahrefs</div>
+        <div class="tool-c"><i></i>Screaming Frog</div>
+        <div class="tool-c"><i></i>WordPress</div>
+        <div class="tool-c"><i></i>Yoast SEO</div>
+        <div class="tool-c"><i></i>PageSpeed Insights</div>
+        <div class="tool-c"><i></i>ChatGPT / AI Tools</div>
+        <div class="tool-c"><i></i>Moz Pro</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CERTS -->
-<section id="certs">
-  <p class="sec-tag reveal">Credentials</p>
-  <h2 class="reveal">Certifications</h2>
-  <p class="sec-sub reveal">Verified by the platforms that define the industry.</p>
-  <div class="cert-grid">
-    <div class="cert-card reveal">
-      <div class="cert-ico">🎓</div>
-      <div><div class="cert-name">Google Digital Marketing</div><div class="cert-by">Google</div></div>
-    </div>
-    <div class="cert-card reveal">
-      <div class="cert-ico">📊</div>
-      <div><div class="cert-name">Advanced Google Analytics</div><div class="cert-by">Google — Certified</div></div>
-    </div>
-    <div class="cert-card reveal">
-      <div class="cert-ico">🤖</div>
-      <div><div class="cert-name">AI Visibility Essentials</div><div class="cert-by">SEMrush Academy</div></div>
-    </div>
-    <div class="cert-card reveal">
-      <div class="cert-ico">⚙️</div>
-      <div><div class="cert-name">Technical SEO & AI Search Essentials</div><div class="cert-by">SEMrush Academy</div></div>
-    </div>
+<section id="crt">
+  <p class="stag rv">Credentials</p>
+  <h2 class="sh rv">Certifications</h2>
+  <p class="sp rv">Verified by the platforms that set the standard.</p>
+  <div class="cert-g">
+    <div class="cert-c rv"><div class="cert-ico">🎓</div><div><div class="cert-n">Google Digital Marketing</div><div class="cert-by">Google</div></div></div>
+    <div class="cert-c rv"><div class="cert-ico">📊</div><div><div class="cert-n">Advanced Google Analytics</div><div class="cert-by">Google — Certified</div></div></div>
+    <div class="cert-c rv"><div class="cert-ico">🤖</div><div><div class="cert-n">AI Visibility Essentials</div><div class="cert-by">SEMrush Academy</div></div></div>
+    <div class="cert-c rv"><div class="cert-ico">⚙</div><div><div class="cert-n">Technical SEO & AI Search</div><div class="cert-by">SEMrush Academy</div></div></div>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="exp">
-  <p class="sec-tag reveal">Track Record</p>
-  <h2 class="reveal">Experience</h2>
-  <p class="sec-sub reveal">Every role sharpened a different edge.</p>
-  <div class="exp-timeline">
-    <div class="exp-item">
-      <div class="exp-date">Oct 2025 — Present</div>
+<section id="xp">
+  <p class="stag rv">Track Record</p>
+  <h2 class="sh rv">Experience</h2>
+  <p class="sp rv">Each role built a different edge.</p>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-date">Oct 2025 — Present</div>
       <h3>SEO Executive</h3>
-      <div class="exp-co">RankTix · Lahore</div>
-      <ul class="exp-list">
-        <li>Develop data-driven SEO strategies improving organic visibility across clients</li>
-        <li>Conduct keyword research, competitor analysis, and full technical site audits</li>
-        <li>Resolve GSC errors — crawl issues, indexing, Core Web Vitals</li>
-        <li>Optimize Google Business Profiles and track with GA4 + SEMrush</li>
+      <div class="tl-co">RankTix · Lahore</div>
+      <ul class="tl-list">
+        <li>Data-driven SEO strategies improving organic visibility for multiple clients</li>
+        <li>Keyword research, competitor analysis, and full technical site audits</li>
+        <li>GSC error resolution — crawl, indexing, Core Web Vitals</li>
+        <li>GA4 + SEMrush monitoring and monthly performance reporting</li>
       </ul>
     </div>
-    <div class="exp-item">
-      <div class="exp-date">2024 — 2025</div>
+    <div class="tl-item">
+      <div class="tl-date">2024 — 2025</div>
       <h3>SEO Specialist</h3>
-      <div class="exp-co">E2E Marketer · Lahore</div>
-      <ul class="exp-list">
+      <div class="tl-co">E2E Marketer · Lahore</div>
+      <ul class="tl-list">
         <li>Led SEO campaigns for service-based and e-commerce clients</li>
-        <li>Executed on-page + technical SEO across multiple websites</li>
-        <li>Built conversion-focused content strategies for e-commerce</li>
-        <li>Backlink acquisition via outreach, guest posting, competitor analysis</li>
+        <li>On-page and technical SEO across multiple websites</li>
+        <li>Conversion-focused content strategy for e-commerce</li>
+        <li>Backlink acquisition via outreach, guest posts, competitor analysis</li>
       </ul>
     </div>
-    <div class="exp-item">
-      <div class="exp-date">2024 — 2025</div>
+    <div class="tl-item">
+      <div class="tl-date">2024 — 2025</div>
       <h3>SEO Expert</h3>
-      <div class="exp-co">Digital Outreach · Lahore</div>
-      <ul class="exp-list">
-        <li>Executed multi-niche SEO campaigns improving rankings and traffic</li>
-        <li>Built domain authority through white-hat off-page tactics</li>
-        <li>Site audits and tracking with SEMrush and Screaming Frog</li>
+      <div class="tl-co">Digital Outreach · Lahore</div>
+      <ul class="tl-list">
+        <li>Multi-niche SEO campaigns improving rankings and traffic</li>
+        <li>Domain authority building via white-hat off-page tactics</li>
+        <li>Site audits with SEMrush and Screaming Frog</li>
       </ul>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
-  <div class="contact-glow"></div>
-  <div class="contact-inner">
-    <p class="sec-tag reveal" style="justify-content:center">Get In Touch</p>
-    <h2 class="reveal">Let's Build<br>Something.</h2>
-    <p class="contact-sub reveal">Ready to grow your organic traffic? I'm available for full-time roles, freelance projects, and SEO consulting.</p>
-    <div class="contact-links reveal">
-      <a href="mailto:hamad.seo87@gmail.com" class="c-link">
-        <span class="c-icon">✉</span> hamad.seo87@gmail.com
-      </a>
-      <a href="tel:+923276780833" class="c-link">
-        <span class="c-icon">☎</span> +92 327 678 0833
-      </a>
-      <a href="https://www.linkedin.com/in/hamad-seo-llm-expert/" target="_blank" class="c-link">
-        <span class="c-icon">⟁</span> LinkedIn Profile
-      </a>
+<section id="ct">
+  <div class="ct-glow"></div>
+  <div class="ct-inner">
+    <p class="stag rv" style="justify-content:center">Get In Touch</p>
+    <h2 class="rv">Let's Build<br><span>Something</span><br>Great.</h2>
+    <p class="ct-sub rv">Open to full-time SEO roles, freelance projects, and consulting. Let's talk about your organic growth goals.</p>
+    <div class="ct-links rv">
+      <a href="mailto:hamad.seo87@gmail.com" class="ct-lnk"><span>✉</span>hamad.seo87@gmail.com</a>
+      <a href="tel:+923276780833" class="ct-lnk"><span>☎</span>+92 327 678 0833</a>
+      <a href="https://www.linkedin.com/in/hamad-seo-llm-expert/" target="_blank" class="ct-lnk"><span>↗</span>LinkedIn</a>
     </div>
-    <a href="mailto:hamad.seo87@gmail.com" class="btn-glow reveal">Send Message →</a>
+    <a href="mailto:hamad.seo87@gmail.com" class="btn-a rv">Send a Message →</a>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">M.HAMAD</div>
-  <div class="footer-txt">© 2025 · SEO Executive & GEO Specialist · Lahore, Pakistan</div>
+  <span>M. Hamad — SEO Executive & GEO Specialist</span>
+  <span>© 2025 · Lahore, Pakistan</span>
 </footer>
 
 <script>
+/* LOADER */
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('hide'),600));
+
 /* CURSOR */
-const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-});
-function animRing(){
-  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-}animRing();
-document.querySelectorAll('a,button,.srv-card,.work-card,.tool-item,.cert-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cur.style.width='20px';cur.style.height='20px';
-    ring.style.width='60px';ring.style.height='60px';
-    ring.style.borderColor='rgba(124,58,237,.6)';
-  });
-  el.addEventListener('mouseleave',()=>{
-    cur.style.width='12px';cur.style.height='12px';
-    ring.style.width='40px';ring.style.height='40px';
-    ring.style.borderColor='rgba(6,182,212,.4)';
-  });
+const c=document.getElementById('c'),cr=document.getElementById('cr');
+let mx=0,my=0,rx=window.innerWidth/2,ry=window.innerHeight/2;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.left=mx+'px';c.style.top=my+'px'});
+(function animCr(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(animCr)})();
+document.querySelectorAll('a,.sc,.wc,.cert-c,.tool-c').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{c.style.width='16px';c.style.height='16px';cr.style.width='52px';cr.style.height='52px'});
+  el.addEventListener('mouseleave',()=>{c.style.width='8px';c.style.height='8px';cr.style.width='36px';cr.style.height='36px'});
 });
 
-/* PARTICLE CANVAS */
-const canvas=document.getElementById('bg-canvas');
-const ctx=canvas.getContext('2d');
-let W=window.innerWidth,H=window.innerHeight;
-canvas.width=W;canvas.height=H;
-window.addEventListener('resize',()=>{W=window.innerWidth;H=window.innerHeight;canvas.width=W;canvas.height=H});
-
-const pts=[];
-for(let i=0;i<120;i++) pts.push({
-  x:Math.random()*W,y:Math.random()*H,
-  vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
-  r:Math.random()*1.5+.5,
-  c:Math.random()>.5?'rgba(124,58,237,':'rgba(6,182,212,'
-});
-
-function drawCanvas(){
-  ctx.clearRect(0,0,W,H);
-  pts.forEach(p=>{
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0||p.x>W)p.vx*=-1;
-    if(p.y<0||p.y>H)p.vy*=-1;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=p.c+'0.6)';
-    ctx.fill();
-  });
-  pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{
-    const d=Math.hypot(a.x-b.x,a.y-b.y);
-    if(d<140){
+/* GLOBE CANVAS */
+(function(){
+  const cv=document.getElementById('globe-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d'),W=420,H=420,R=170;
+  let rot=0;
+  const pts=[];
+  const kw=['TECHNICAL SEO','ON-PAGE','KEYWORDS','LINK BUILDING','GA4','GSC','GEO','AI SEARCH','SEMRUSH','AHREFS','WORDPRESS','SCHEMA'];
+  for(let i=0;i<180;i++){
+    const theta=Math.acos(1-2*(i+.5)/180);
+    const phi=Math.PI*(1+Math.sqrt(5))*i;
+    pts.push({
+      theta,phi,
+      lbl:i%15===0?kw[Math.floor(i/15)%kw.length]:null
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const cx=W/2,cy=H/2;
+    /* glow */
+    const grd=ctx.createRadialGradient(cx,cy,0,cx,cy,R*1.1);
+    grd.addColorStop(0,'rgba(167,139,250,.04)');
+    grd.addColorStop(1,'transparent');
+    ctx.fillStyle=grd;ctx.beginPath();ctx.arc(cx,cy,R*1.1,0,Math.PI*2);ctx.fill();
+    /* grid lines */
+    for(let lat=-80;lat<=80;lat+=20){
+      const lr=lat*Math.PI/180;
+      const y3=R*Math.sin(lr);
+      const r2=Math.sqrt(R*R-y3*y3);
       ctx.beginPath();
-      ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-      ctx.strokeStyle=`rgba(124,58,237,${(1-d/140)*.15})`;
+      for(let l=0;l<=360;l+=2){
+        const angle=(l*Math.PI/180)+rot;
+        const x3=r2*Math.cos(angle);
+        const z3=r2*Math.sin(angle);
+        const scale=1+(z3/R)*.12;
+        const px=cx+x3*scale;
+        const py=cy+y3*scale;
+        l===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+      }
+      const op=0.06+Math.max(0,Math.sin(rot+lat/30))*0.04;
+      ctx.strokeStyle=`rgba(167,139,250,${op})`;
       ctx.lineWidth=.5;ctx.stroke();
     }
-  }));
-  requestAnimationFrame(drawCanvas);
-}drawCanvas();
+    for(let lng=0;lng<360;lng+=30){
+      ctx.beginPath();
+      for(let lat2=-90;lat2<=90;lat2+=3){
+        const angle=(lng*Math.PI/180)+rot;
+        const lr2=lat2*Math.PI/180;
+        const x3=R*Math.cos(lr2)*Math.cos(angle);
+        const y3=R*Math.sin(lr2);
+        const z3=R*Math.cos(lr2)*Math.sin(angle);
+        const scale=1+(z3/R)*.12;
+        const px=cx+x3*scale;
+        const py=cy+y3*scale;
+        lat2===-90?ctx.moveTo(px,py):ctx.lineTo(px,py);
+      }
+      const op=0.05+Math.max(0,Math.cos(rot+lng/40))*0.04;
+      ctx.strokeStyle=`rgba(34,211,238,${op})`;
+      ctx.lineWidth=.5;ctx.stroke();
+    }
+    /* dots & labels */
+    const visible=[];
+    pts.forEach(p=>{
+      const phi=p.phi+rot;
+      const x3=R*Math.sin(p.theta)*Math.cos(phi);
+      const y3=R*Math.cos(p.theta);
+      const z3=R*Math.sin(p.theta)*Math.sin(phi);
+      if(z3>-20){
+        const scale=1+(z3/R)*.15;
+        const op=0.3+z3/R*0.7;
+        visible.push({x:cx+x3*scale,y:cy-y3*scale,z:z3,op,lbl:p.lbl});
+      }
+    });
+    visible.sort((a,b)=>a.z-b.z);
+    visible.forEach(p=>{
+      const sz=p.z>0?1.5:.8;
+      ctx.beginPath();ctx.arc(p.x,p.y,sz,0,Math.PI*2);
+      ctx.fillStyle=`rgba(167,139,250,${p.op*.8})`;ctx.fill();
+      if(p.lbl&&p.z>R*.3){
+        ctx.font=`500 9px Inter,sans-serif`;
+        ctx.fillStyle=`rgba(167,139,250,${Math.min(1,p.op)})`;
+        ctx.letterSpacing='1px';
+        ctx.fillText(p.lbl,p.x+4,p.y-4);
+      }
+    });
+    rot+=.004;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
-/* SERVICE CARD MOUSE GLOW */
-document.querySelectorAll('.srv-card').forEach(card=>{
-  card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    card.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');
-    card.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%');
+/* SERVICE CARD GLOW */
+document.querySelectorAll('.sc').forEach(el=>{
+  el.addEventListener('mousemove',e=>{
+    const r=el.getBoundingClientRect();
+    el.style.setProperty('--x',(e.clientX-r.left)/r.width*100+'%');
+    el.style.setProperty('--y',(e.clientY-r.top)/r.height*100+'%');
   });
 });
 
 /* SCROLL REVEAL */
-const ro=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('vis'),i*80);
-  });
-},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+const ro=new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*70)});
+},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
 
-/* SKILL BARS */
-const sro=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.querySelectorAll('.skill-fill').forEach((f,i)=>{
-        setTimeout(()=>{f.style.width=f.dataset.w+'%'},i*100+200);
-      });
-      sro.unobserve(entry.target);
+/* SKILLS */
+const so=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.sb-fill').forEach((f,i)=>setTimeout(()=>{f.style.width=f.dataset.w+'%'},i*120+300));
+      so.unobserve(e.target);
     }
   });
-},{threshold:.3});
-const sb=document.getElementById('skill-bars');
-if(sb)sro.observe(sb);
+},{threshold:.2});
+const sb=document.getElementById('sbars');if(sb)so.observe(sb);
 
-/* EXPERIENCE TIMELINE */
-const expObs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('show'),i*150);
-  });
+/* TIMELINE */
+const to=new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*200)});
 },{threshold:.15});
-document.querySelectorAll('.exp-item').forEach(el=>expObs.observe(el));
+document.querySelectorAll('.tl-item').forEach(el=>to.observe(el));
 </script>
 </body>
 </html>
