@@ -999,61 +999,57 @@ function drawCanvas(){
     p.x+=p.vx;p.y+=p.vy;
     if(p.x<0||p.x>W)p.vx*=-1;
     if(p.y<0||p.y>H)p.vy*=-1;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=p.c+'0.6)';
-    ctx.fill();
+    ctx.fillStyle=p.c+'.4)';
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
   });
-  pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{
-    const d=Math.hypot(a.x-b.x,a.y-b.y);
-    if(d<140){
-      ctx.beginPath();
-      ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-      ctx.strokeStyle=`rgba(124,58,237,${(1-d/140)*.15})`;
-      ctx.lineWidth=.5;ctx.stroke();
-    }
-  }));
   requestAnimationFrame(drawCanvas);
 }drawCanvas();
 
-/* SERVICE CARD MOUSE GLOW */
+/* REVEAL ON SCROLL */
+function reveal(){
+  document.querySelectorAll('.reveal').forEach(el=>{
+    let top=el.getBoundingClientRect().top;
+    if(top<window.innerHeight*.85) el.classList.add('vis');
+  });
+}
+window.addEventListener('scroll',reveal);reveal();
+
+/* ANIMATE SKILLS */
+function animSkills(){
+  let sb=document.getElementById('skill-bars');
+  if(!sb) return;
+  let top=sb.getBoundingClientRect().top;
+  if(top<window.innerHeight*.8){
+    sb.querySelectorAll('.skill-fill').forEach(el=>{
+      if(!el.style.width||el.style.width==='0px'){
+        let w=el.getAttribute('data-w');
+        el.style.width=w+'%';
+      }
+    });
+  }
+}
+window.addEventListener('scroll',animSkills);
+
+/* EXP TIMELINE */
+function expVisible(){
+  document.querySelectorAll('.exp-item').forEach(el=>{
+    let top=el.getBoundingClientRect().top;
+    if(top<window.innerHeight*.7) el.classList.add('show');
+  });
+}
+window.addEventListener('scroll',expVisible);expVisible();
+
+/* SRV CARD HOVER */
 document.querySelectorAll('.srv-card').forEach(card=>{
   card.addEventListener('mousemove',e=>{
-    const r=card.getBoundingClientRect();
-    card.style.setProperty('--mx',(e.clientX-r.left)/r.width*100+'%');
-    card.style.setProperty('--my',(e.clientY-r.top)/r.height*100+'%');
+    let rect=card.getBoundingClientRect();
+    let x=((e.clientX-rect.left)/rect.width)*100;
+    let y=((e.clientY-rect.top)/rect.height)*100;
+    card.style.setProperty('--mx',x+'%');
+    card.style.setProperty('--my',y+'%');
   });
 });
-
-/* SCROLL REVEAL */
-const ro=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('vis'),i*80);
-  });
-},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
-
-/* SKILL BARS */
-const sro=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.querySelectorAll('.skill-fill').forEach((f,i)=>{
-        setTimeout(()=>{f.style.width=f.dataset.w+'%'},i*100+200);
-      });
-      sro.unobserve(entry.target);
-    }
-  });
-},{threshold:.3});
-const sb=document.getElementById('skill-bars');
-if(sb)sro.observe(sb);
-
-/* EXPERIENCE TIMELINE */
-const expObs=new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('show'),i*150);
-  });
-},{threshold:.15});
-document.querySelectorAll('.exp-item').forEach(el=>expObs.observe(el));
 </script>
+
 </body>
 </html>
